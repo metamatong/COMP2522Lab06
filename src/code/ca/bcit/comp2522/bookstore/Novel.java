@@ -7,7 +7,7 @@ package ca.bcit.comp2522.bookstore;
  * @author Kyle Cheon
  * @version 1.0
  */
-class Novel implements Comparable<Novel>
+class Novel extends Literature implements Comparable<Novel>
 {
     private final String title;
     private final String author;
@@ -34,6 +34,7 @@ class Novel implements Comparable<Novel>
      *
      * @return the title of the novel
      */
+    @Override
     public String getTitle()
     {
         return title;

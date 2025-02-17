@@ -16,7 +16,7 @@ import java.util.Set;
  * @author Kyle Cheon
  * @version 1.0
  */
-class BookStore
+class BookStore<T extends Literature>
 {
     private static final int ZERO = 0;
     private static final int DECADE = 10;
@@ -25,11 +25,13 @@ class BookStore
 
     private final String bookStoreName;
     private final List<Novel> novels;
+    private final List<T> items;
 
     BookStore(final String bookStoreName)
     {
         this.bookStoreName = validateBookStoreName(bookStoreName);
         novels = new ArrayList<>();
+        items = new ArrayList<>();
 
         novels.add(new Novel("The Adventures of Augie March", "Saul Bellow", 1953));
         novels.add(new Novel("All the King’s Men", "Robert Penn Warren", 1946));
@@ -403,6 +405,64 @@ class BookStore
     }
 
     /**
+     * Adds an item to the generic list T.
+     * @param item
+     */
+    public void addItem(T item)
+    {
+        items.add(item);
+    }
+
+    /**
+     * Prints the items in the generic list.
+     */
+    public void printItems()
+    {
+        for(T item : items)
+        {
+            System.out.println(item.getTitle());
+        }
+    }
+
+    // Static nested Class
+    static class BookStoreInfo{
+        public void displayInfo(final String storeName,
+                                final int itemCount)
+        {
+            System.out.println("BookStore: " + storeName + ", Items: " + itemCount);
+
+        }
+    }
+
+    class NovelStatistics{
+        /**
+         * Finds the average title length of all items in
+         * the generic list.
+         * @return the average title length as a double
+         */
+        public double averageTitleLength()
+        {
+            int totalLength;
+            totalLength = 0;
+            for(final T item: items)
+            {
+                totalLength += item.getTitle().length();
+            }
+            for(final Novel novel: novels)
+            {
+                totalLength += novel.getTitle().length();
+            }
+            final int totalListSize = novels.size() + items.size();
+            final double titleLenghtAverage;
+            titleLenghtAverage = (double) totalLength / totalListSize;
+            return titleLenghtAverage;
+        }
+
+
+    }
+
+
+    /**
      * Drives the bookstore and novel methods and test them.
      * @param args
      */
@@ -437,6 +497,29 @@ class BookStore
         fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
         System.out.println("Books by decade: 2000s");
         bookstore.printGroupByDecade(2000);
+
+        // Lab 06
+        // Part 1
+        System.out.println("Lab 06");
+
+        final BookStore<Literature> store;
+        store = new BookStore<>("Kyle and Kaid's Wonderful BookStore");
+        store.addItem(new Novel("War and Peace", "Leo Tolstoy", 1869));
+        store.addItem(new ComicBook("Spider-Man"));
+        store.addItem(new Magazine("National Geographic"));
+
+        store.printItems();
+
+        // Part 2 Demonstrating Nested Classes
+        BookStore.BookStoreInfo info;
+        info = new BookStore.BookStoreInfo();
+        info.displayInfo(store.bookStoreName, store.items.size());
+
+        BookStore<Literature>.NovelStatistics novelStats;
+        novelStats = store.new NovelStatistics();
+        System.out.println("Average Novel Title Length: " + novelStats.averageTitleLength());
+
+
     }
 
     /*
