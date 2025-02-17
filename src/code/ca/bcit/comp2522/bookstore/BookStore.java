@@ -265,16 +265,12 @@ class BookStore<T extends Literature>
      */
     public void printBookTitle(final String title)
     {
-        for(Novel novel : novels)
-        {
-            if(novel != null)
-            {
-                if(novel.getTitle().contains(title))
-                {
-                    System.out.println(novel.getTitle());
-                }
+        items.forEach(item ->{
+            if(item.getTitle().contains(title)){
+                System.out.println(item.getTitle());
             }
-        }
+        });
+
     }
 
     /**
@@ -518,6 +514,8 @@ class BookStore<T extends Literature>
         BookStore<Literature>.NovelStatistics novelStats;
         novelStats = store.new NovelStatistics();
         System.out.println("Average Novel Title Length: " + novelStats.averageTitleLength());
+
+        store.printBookTitle("War");
 
 
     }
