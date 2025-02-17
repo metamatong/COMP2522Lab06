@@ -1,12 +1,6 @@
 package ca.bcit.comp2522.bookstore;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -278,18 +272,13 @@ class BookStore<T extends Literature>
      */
     public void printTitlesInAlphaOrder()
     {
-        final List<Novel> sortedNovels;
-        sortedNovels = copyNovels(novels);
-        Collections.sort(sortedNovels);
-        for(Novel novel : sortedNovels)
-        {
-            System.out.println(novel.getTitle());
-        }
+        items.sort(Comparator.comparing(Literature::getTitle, String::compareToIgnoreCase));
+        items.forEach(item -> System.out.println(item.getTitle()));
     }
 
     /**
      * Prints all books for the inputted decade.
-     * IE 2000s -> print all book titles from 2000 - 2009.
+     * IE 2000s -> print all book titles from 2000 to 2009.
      * @param decade is the decade bound to check.
      */
     public void printGroupByDecade(final int decade)
@@ -420,6 +409,17 @@ class BookStore<T extends Literature>
         }
     }
 
+    public void addNovelsToCollection(final List<? super Novel> novelCollection)
+    {
+        for(final T item : items)
+        {
+            if(item instanceof Novel)
+            {
+                novelCollection.add((Novel) item);
+            }
+        }
+    }
+
     // Static nested Class
     static class BookStoreInfo{
         public void displayInfo(final String storeName,
@@ -515,7 +515,35 @@ class BookStore<T extends Literature>
         novelStats = store.new NovelStatistics();
         System.out.println("Average Novel Title Length: " + novelStats.averageTitleLength());
 
+        //Part 3
         store.printBookTitle("War");
+        System.out.println("\nPrint titles in alphabetical order: ");
+        store.printTitlesInAlphaOrder();
+
+        // Part 4
+        final List<Novel> novelCollection;
+        novelCollection = new ArrayList<>();
+        store.addNovelsToCollection(novelCollection);
+        System.out.println("\nNovels in Store");
+        for(Novel novel : novelCollection)
+        {
+            System.out.println(novel.getTitle());
+        }
+
+        // Bonus Part
+        System.out.println("\nItems before sorting by title length: ");
+        store.printItems();
+        store.items.sort(new Comparator<Literature>(){
+            @Override
+            public int compare(final Literature o1, final Literature o2)
+            {
+                return Integer.compare(o1.getTitle().length(),
+                        o2.getTitle().length());
+            }
+        });
+        System.out.println("\nItems after sorting by title length: ");
+        store.printItems();
+
 
 
     }
