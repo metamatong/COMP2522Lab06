@@ -5,6 +5,7 @@ package ca.bcit.comp2522.bookstore;
  *
  * @author Clinton Nguyen
  * @author Kyle Cheon
+ * @author Kaid Krawchuk
  * @version 1.0
  */
 class Novel extends Literature implements Comparable<Novel>

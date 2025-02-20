@@ -137,6 +137,10 @@ class BookStore<T extends Literature>
         }
     }
 
+    /**
+     * Adds all items of type Novel from the items list to the specified collections
+     * @param novelCollection the collection to which novels should be added.
+     */
     public void addNovelsToCollection(final List<? super Novel> novelCollection)
     {
         for(final T item : items)
@@ -149,7 +153,16 @@ class BookStore<T extends Literature>
     }
 
     // Static nested Class
+
+    /**
+     * A static nested class that provides information about the bookstore.
+     */
     static class BookStoreInfo{
+        /**
+         * Displays the bookstore's name and the number of items available.
+         * @param storeName the name of the bookstore.
+         * @param itemCount the number of items available in the bookstore.
+         */
         public void displayInfo(final String storeName,
                                 final int itemCount)
         {
@@ -158,6 +171,9 @@ class BookStore<T extends Literature>
         }
     }
 
+    /**
+     * An inner class that provides statistical calculations related to novels.
+     */
     class NovelStatistics{
         /**
          * Finds the average title length of all items in
