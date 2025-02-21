@@ -138,6 +138,45 @@ class BookStore<T extends Literature>
     }
 
     /**
+     * Prints the only the Novel in the generic list.
+     */
+    public void printNovels()
+    {
+        for(T item : items)
+        {
+            if (item instanceof Novel) {
+                System.out.println(item.getTitle());
+            }
+        }
+    }
+
+    /**
+     * Prints the only the ComicBook in the generic list.
+     */
+    public void printComicBook()
+    {
+        for(T item : items)
+        {
+            if (item instanceof ComicBook) {
+                System.out.println(item.getTitle());
+            }
+        }
+    }
+
+    /**
+     * Prints the only the Magazine in the generic list.
+     */
+    public void printMagazine()
+    {
+        for(T item : items)
+        {
+            if (item instanceof Magazine) {
+                System.out.println(item.getTitle());
+            }
+        }
+    }
+
+    /**
      * Adds all items of type Novel from the items list to the specified collections
      * @param novelCollection the collection to which novels should be added.
      */
@@ -210,8 +249,23 @@ class BookStore<T extends Literature>
         store.addItem(new Novel("War and Peace", "Leo Tolstoy", 1869));
         store.addItem(new ComicBook("Spider-Man"));
         store.addItem(new Magazine("National Geographic"));
+        store.addItem(new Novel("Love and War", "Dave Tiko", 1999));
+        store.addItem(new ComicBook("Bat-Man"));
+        store.addItem(new Magazine("History Of Our Time"));
 
         store.printItems();
+
+        System.out.println(" ");
+        System.out.println("Print only Novels: ");
+        store.printNovels();
+
+        System.out.println(" ");
+        System.out.println("Print only ComicBooks: ");
+        store.printComicBook();
+
+        System.out.println(" ");
+        System.out.println("Print only Magazines: ");
+        store.printMagazine();
 
         // Part 2 Demonstrating Nested Classes
         BookStore.BookStoreInfo info;
